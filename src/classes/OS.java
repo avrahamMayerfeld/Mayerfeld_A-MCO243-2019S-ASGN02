@@ -54,7 +54,7 @@ public class OS {
 		//start off partially manually, avoid several issues 
 		currPCB = ready.poll();
 		processor.setCurrProcess(currPCB.getProcess());
-		processor.setCurrInstruction(currPCB.getCurrInstruction());
+		processor.setCurrInstruction(currPCB.getCurrInstruction());//this is initially set to 0 anyway, and i'm not sure if its a good idea to put 0 here, although if it is it would be cleaner.
 		
 		for(int i = 1; i <= 3000; i++)
 		{
@@ -62,21 +62,21 @@ public class OS {
 			quantumCounter++;
 			//There's a slight repetition with the next 3, but i think it's cleaner than to have an additional if and repeat the states.
 			if(state.equals(ProcessState.FINISHED)) {
-				System.out.println("process finished");
+				System.out.print("process finished");
 				doSwitch(currPCB);
 				
 			}
 			else if(state.equals(ProcessState.BLOCKED)) {
-				System.out.println("process blocked");
+				System.out.print("process blocked");
 				blocked.add(currPCB);
 				doSwitch(currPCB);
 				
 			}
 			else if(quantumCounter >= QUANTUM) {
-				System.out.println("quantum reached");
+				System.out.print("quantum reached");
 				ready.add(currPCB);
 				doSwitch(currPCB);
-				quantumCounter = 0;
+				
 			}
 			
 		}
@@ -84,9 +84,12 @@ public class OS {
 	}
 	
 	public static void doSwitch(ProcessControlBlock pcb) {
+		
+		quantumCounter = 0;
+		
 		if(ready.isEmpty()) 
 		{
-			System.out.println("The processor is idling...");
+			System.out.println("		The processor is idling...");
 			if(!blocked.isEmpty())
 				unblockWithProbability();
 		}
@@ -98,7 +101,7 @@ public class OS {
 			pcb.setReg4(processor.getRegisterValue(3));
 			pcb.setCurrInstruction(processor.getCurrInstruction());
 			currPCB = ready.poll();
-			System.out.println("performing context switch");
+			System.out.println("		performing context switch");
 			processor.setCurrProcess(currPCB.getProcess());
 			processor.setCurrInstruction(currPCB.getCurrInstruction());
 			processor.setRegisterValue(0, currPCB.getReg1());
