@@ -64,13 +64,13 @@ public class OS {
 			if(state.equals(ProcessState.FINISHED)) {
 				System.out.print("process finished");
 				doSwitch(currPCB);
-				
+				quantumCounter = 0;
 			}
 			else if(state.equals(ProcessState.BLOCKED)) {
 				System.out.print("process blocked");
 				blocked.add(currPCB);
 				doSwitch(currPCB);
-				
+				quantumCounter = 0;
 			}
 			else if(quantumCounter >= QUANTUM) {
 				System.out.print("quantum reached");
