@@ -6,10 +6,10 @@ import interfaces.IProcessor;
 import interfaces.IRandomValueGenerator;
 
 public class SimProcessor implements IProcessor {
-    IRandomValueGenerator randGen;
+    	IRandomValueGenerator randGen;
 	IProcess currProcess;
 	int[] registers = new int[4];
-    int currInstruction = 0;
+    	int currInstruction = 0;
     
 	public SimProcessor(IRandomValueGenerator randGen) {
 		this.randGen = randGen;
@@ -29,8 +29,8 @@ public class SimProcessor implements IProcessor {
 	@Override
 	public ProcessState executeNextInstruction() { 
 		ProcessState currState = currProcess.execute(currInstruction);
-	    currInstruction++;
-	    return currState;
+		currInstruction++;
+	    	return currState;
 	}
 
 	@Override
